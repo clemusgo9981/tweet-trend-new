@@ -25,7 +25,6 @@ pipeline {
                 echo "---------- Unit Test Completed ----------"
             }
         }
-
         stage('SonarQube analysis') {
             environment {
                 scannerHome = tool 'clemusgo-sonar-scanner';
