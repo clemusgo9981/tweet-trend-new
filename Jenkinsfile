@@ -99,10 +99,10 @@ pipeline {
     }
     post {
         always {
-            // Clean up operations, if any, remove temporary files or resources.
+            echo 'Clean up operations, if any, remove temporary files or resources.'
         }
         failure {
-            // Handle failures. Send notifications.
+            echo 'Handle failures. Send notifications.'
         }
     }
 }
