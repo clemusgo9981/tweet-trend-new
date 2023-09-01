@@ -96,13 +96,17 @@ pipeline {
                 echo '<--------------- Docker Publish Ended --------------->'
             }
         }
-    }
-    post {
-        always {
-            echo 'Clean up operations, if any, remove temporary files or resources.'
-        }
-        failure {
-            echo 'Handle failures. Send notifications.'
+        post {
+            always {
+                script {
+                    echo '<--------------- Docker Clean Up Temporary Files --------------->'
+                    sh 'rm -rf /home/ubuntu/jenkins/workspace/ttrend-multibranch_main@tmp/*'
+                    echo '<--------------- Clean up operations completed --------------->'
+                }
+            }
+            failure {
+                echo 'Handle failures. Send notifications.'
+            }
         }
     }
 }
