@@ -95,17 +95,17 @@ pipeline {
                 }
                 echo '<--------------- Docker Publish Ended --------------->'
             }
-        }
-        post {
-            always {
-                script {
-                    echo '<--------------- Docker Clean Up Temporary Files --------------->'
-                    sh 'rm -rf /home/ubuntu/jenkins/workspace/ttrend-multibranch_main@tmp/*'
-                    echo '<--------------- Clean up operations completed --------------->'
+            post {
+                always {
+                    script {
+                        echo '<--------------- Docker Clean Up Temporary Files --------------->'
+                        sh 'rm -rf /home/ubuntu/jenkins/workspace/ttrend-multibranch_main@tmp/*'
+                        echo '<--------------- Clean up operations completed --------------->'
+                    }
                 }
-            }
-            failure {
-                echo 'Handle failures. Send notifications.'
+                failure {
+                    echo 'Handle failures. Send notifications.'
+                }
             }
         }
     }
