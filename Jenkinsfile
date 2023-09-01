@@ -49,6 +49,7 @@ pipeline {
                 }
             }
         }
+
         stage("Jar Publish") {
             steps {
                 script {
@@ -73,26 +74,35 @@ pipeline {
                 }
             }
         }
+
         stage(" Docker Build ") {
             steps {
+                echo '<--------------- Docker Build Started --------------->'
                 script {
-                    echo '<--------------- Docker Build Started --------------->'
-                    app = docker.build(imageName+":"+version)
-                    echo '<--------------- Docker Build Ends --------------->'
+                    app = docker.build("${imageName}:${version}")
                 }
+                echo '<--------------- Docker Build Ends --------------->'
             }
         }
 
         stage(" Docker Publish ") {
             steps {
+                echo '<--------------- Docker Publish Started --------------->'
                 script {
-                    echo '<--------------- Docker Publish Started --------------->'
                     docker.withRegistry(registry, 'artifact-cred') {
                         app.push()
                     }
-                    echo '<--------------- Docker Publish Ended --------------->'
                 }
+                echo '<--------------- Docker Publish Ended --------------->'
             }
+        }
+    }
+    post {
+        always {
+            // Clean up operations, if any, remove temporary files or resources.
+        }
+        failure {
+            // Handle failures. Send notifications.
         }
     }
 }
